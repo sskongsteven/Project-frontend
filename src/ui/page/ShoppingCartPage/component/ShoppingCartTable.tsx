@@ -4,17 +4,21 @@ import {CartItemDto} from "../../../../data/cartItem/CartItem.type.ts";
 
 type Props = {
     cartItemDtoList: CartItemDto[];
+    changeQuantity: (pid: number, quantity: number) => void;
+    deleteCartItem: (pid: number) => void;
 }
 
-export default function ShoppingCartTable({cartItemDtoList}:Props) {
+export default function ShoppingCartTable({cartItemDtoList, changeQuantity, deleteCartItem}: Props) {
+
+
     return (
         <>
             <Typography
                 variant="h5"
                 sx={{
-                    mb:3,
-                    ml:3,
-                    mt:10,
+                    mb: 3,
+                    ml: 3,
+                    mt: 10,
                     fontWeight: "bold"
                 }}
             >
@@ -34,8 +38,12 @@ export default function ShoppingCartTable({cartItemDtoList}:Props) {
                     </TableHead>
                     <TableBody>
                         {
-                            cartItemDtoList.map((value)=>(
-                                <ShoppingCartTableItem key={value.pid} cartItemDto={value}/>
+                            cartItemDtoList.map((value) => (
+                                <ShoppingCartTableItem key={value.pid} cartItemDto={value}
+                                                       handleQuantityChange={changeQuantity}
+                                                       deleteCartItem={deleteCartItem}
+
+                                />
                             ))
                         }
                     </TableBody>

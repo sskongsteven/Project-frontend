@@ -5,11 +5,12 @@ import RemoveIcon from '@mui/icons-material/Remove';
 type Props = {
     quantity: number,
     handleMinus: () => void,
-    handleAdd: () => void
+    handleAdd: () => void,
+    isLoading?: boolean
 }
 
 export default function QuantitySelector(
-    {quantity, handleAdd, handleMinus}
+    {quantity, handleAdd, handleMinus, isLoading = false}
         : Props) {
 
 
@@ -17,6 +18,7 @@ export default function QuantitySelector(
         <Stack direction="row">
             <IconButton
                 onClick={handleMinus}
+                disabled={isLoading}
             >
                 <RemoveIcon/>
             </IconButton>
@@ -33,6 +35,7 @@ export default function QuantitySelector(
             </Box>
             <IconButton
                 onClick={handleAdd}
+                disabled={isLoading}
             >
                 <AddIcon/>
             </IconButton>

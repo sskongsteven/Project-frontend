@@ -30,16 +30,38 @@ export default function ShoppingCartPage() {
         }
     }
 
+    const changeQuantity = (pid: number, quantity: number) => {
+        const updatedDtoList = cartItemDtoList?.map((value) => {
+            if (value.pid === pid) {
+                value.cartQuantity = quantity;
+            }
+            return value;
+        })
+        setCartItemDtoList(updatedDtoList);
+    }
+
+    const deleteCartItem = (pid: number) => {
+        const updatedDtoList = cartItemDtoList?.filter((value) => (
+            value.pid !== pid
+        ));
+        setCartItemDtoList(updatedDtoList);
+    }
+
     const renderCartContainer = () => {
-        if (cartItemDtoList) {
+        if (cartItemDtoList && cartItemDtoList.length > 0) {
             return (
                 <>
-                    <ShoppingCartTable cartItemDtoList={cartItemDtoList}/>
+                    <ShoppingCartTable cartItemDtoList={cartItemDtoList} changeQuantity={changeQuantity}
+                                       deleteCartItem={deleteCartItem}/>
                     <Stack direction="row" justifyContent="space-between" sx={{my: 2}}>
                         <Typography variant="h5">Total: ${calTotal(cartItemDtoList).toLocaleString()}</Typography>
                         <Button size="large">Payyyyyyyyyyyyyyyy</Button>
                     </Stack>
                 </>
+            )
+        } else if (cartItemDtoList && cartItemDtoList.length === 0){
+            return (
+                <Typography variant="h1">Empty Cart</Typography>
             )
         } else {
             return (
@@ -49,7 +71,7 @@ export default function ShoppingCartPage() {
     }
 
     useEffect(() => {
-        if(loginUser) {
+        if (loginUser) {
             getUserCart();
         } else if (loginUser === null) {
             navigate("/login")
