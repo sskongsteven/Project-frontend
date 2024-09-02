@@ -1,10 +1,11 @@
 import axios from "axios";
 import {GetAllProductDto, ProductDetailDto} from "../data/product/Product.type.ts";
+import getEnvConfig from "../config/env/EnvConfig.ts";
 
-const baseUrl = "http://localhost:8080";
+const baseUrl = getEnvConfig().baseUrl;
 
 export const getAllProduct = async () => {
-        const response = await axios.get<GetAllProductDto>(`${baseUrl}/public/product`);
+        const response = await axios.get<GetAllProductDto[]>(`${baseUrl}/public/product`);
         return response.data;
 }
 

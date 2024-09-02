@@ -34,7 +34,7 @@ export default function ShoppingCartDrawer({open, closeDrawer}: Props) {
                 )
             } else {
                 return (
-                    <Typography>Your cart is empty</Typography>
+                    <Typography>Your shopping cart is empty</Typography>
                 )
             }
         } else {
@@ -47,10 +47,15 @@ export default function ShoppingCartDrawer({open, closeDrawer}: Props) {
     return (
         <Drawer anchor="right" open={open} onClose={closeDrawer} onTransitionEnter={getUserCart}>
             <Button
-            onClick={()=>{
-                navigate("/shoppingcart")
-            }}
-            >Cart</Button>
+                sx={{
+                    mt: "10px"
+                }}
+                onClick={() => {
+                    navigate("/shoppingcart")
+                }}
+            >
+                To Shopping Cart
+            </Button>
             <Divider sx={{my: 2}}></Divider>
             <Container>
                 {

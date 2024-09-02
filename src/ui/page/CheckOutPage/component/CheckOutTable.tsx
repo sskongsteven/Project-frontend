@@ -1,16 +1,12 @@
 import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography} from "@mui/material";
-import ShoppingCartTableItem from "./ShoppingCartTableItem.tsx";
-import {CartItemDto} from "../../../../data/cartItem/CartItem.type.ts";
+import {TransactionDto} from "../../../../data/transaction/Transaction.type.ts";
+import CheckOutTableItem from "./CheckOutTableItem.tsx";
 
 type Props = {
-    cartItemDtoList: CartItemDto[];
-    changeQuantity: (pid: number, quantity: number) => void;
-    deleteCartItem: (pid: number) => void;
+    transactionDto: TransactionDto
 }
 
-export default function ShoppingCartTable({cartItemDtoList, changeQuantity, deleteCartItem}: Props) {
-
-
+export default function CheckOutTable({transactionDto}: Props) {
     return (
         <>
             <Typography
@@ -23,7 +19,7 @@ export default function ShoppingCartTable({cartItemDtoList, changeQuantity, dele
                     color: "white"
                 }}
             >
-                Your Shopping Cart
+                Checkout Payment Detail
             </Typography>
             <TableContainer component={Paper}>
                 <Table sx={{minWidth: 650}} aria-label="simple table">
@@ -32,19 +28,14 @@ export default function ShoppingCartTable({cartItemDtoList, changeQuantity, dele
                             <TableCell></TableCell>
                             <TableCell>Name</TableCell>
                             <TableCell>Unit Price</TableCell>
-                            <TableCell></TableCell>
-                            <TableCell>Sub Total</TableCell>
-                            <TableCell></TableCell>
+                            <TableCell>Quantity</TableCell>
+                            <TableCell>Sub-Total</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {
-                            cartItemDtoList.map((value) => (
-                                <ShoppingCartTableItem key={value.pid} cartItemDto={value}
-                                                       handleQuantityChange={changeQuantity}
-                                                       deleteCartItem={deleteCartItem}
-
-                                />
+                            transactionDto.items.map((value) => (
+                                <CheckOutTableItem key={value.tpid} transactionItemDto={value}/>
                             ))
                         }
                     </TableBody>

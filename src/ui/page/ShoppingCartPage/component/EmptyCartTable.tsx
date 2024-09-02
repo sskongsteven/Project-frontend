@@ -1,17 +1,7 @@
 import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography} from "@mui/material";
-import ShoppingCartTableItem from "./ShoppingCartTableItem.tsx";
-import {CartItemDto} from "../../../../data/cartItem/CartItem.type.ts";
 
-type Props = {
-    cartItemDtoList: CartItemDto[];
-    changeQuantity: (pid: number, quantity: number) => void;
-    deleteCartItem: (pid: number) => void;
-}
-
-export default function ShoppingCartTable({cartItemDtoList, changeQuantity, deleteCartItem}: Props) {
-
-
-    return (
+export default function EmptyCartTable(){
+    return(
         <>
             <Typography
                 variant="h5"
@@ -38,15 +28,15 @@ export default function ShoppingCartTable({cartItemDtoList, changeQuantity, dele
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {
-                            cartItemDtoList.map((value) => (
-                                <ShoppingCartTableItem key={value.pid} cartItemDto={value}
-                                                       handleQuantityChange={changeQuantity}
-                                                       deleteCartItem={deleteCartItem}
-
-                                />
-                            ))
-                        }
+                        <Typography
+                            sx={{
+                                height: "70px",
+                                margin: "10px",
+                                pl: "20px",
+                                pt: "20px"
+                            }}>
+                            Your shopping cart is empty
+                        </Typography>
                     </TableBody>
                 </Table>
             </TableContainer>

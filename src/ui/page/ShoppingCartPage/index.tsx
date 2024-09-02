@@ -5,14 +5,30 @@ import {useContext, useEffect, useState} from "react";
 import {CartItemDto} from "../../../data/cartItem/CartItem.type.ts";
 import LoadingContainer from "../../component/LoadingContainer.tsx";
 import * as CartItemApi from "../../../api/CartItemApi.ts";
+import * as TransactionApi from "../../../api/TransactionApi.ts";
 import {useNavigate} from "react-router-dom";
 import {LoginUserContext} from "../../../context/LoginUserContext.ts";
+import LoadingBackdrop from "../../component/LoadingBackdrop.tsx";
+import EmptyCartTable from "./component/EmptyCartTable.tsx";
 
 
 export default function ShoppingCartPage() {
     const [cartItemDtoList, setCartItemDtoList] = useState<CartItemDto[] | undefined>(undefined);
+    const [loadingBackDropOpen, setLoadingBackDropOpen] = useState<boolean>(false);
+
     const navigate = useNavigate();
     const loginUser = useContext(LoginUserContext);
+
+    const prepareTransaction = async () => {
+        try {
+            setLoadingBackDropOpen(true);
+            const responseData = await TransactionApi.prepareTransaction();
+            navigate(`/checkout/${responseData.tid}`);
+        } catch (err) {
+            console.error(err);
+            navigate("/error");
+        }
+    }
 
     const calTotal = (cartItemDtoList: CartItemDto[]) => {
         return cartItemDtoList.reduce((total, currentValue) => (
@@ -54,14 +70,28 @@ export default function ShoppingCartPage() {
                     <ShoppingCartTable cartItemDtoList={cartItemDtoList} changeQuantity={changeQuantity}
                                        deleteCartItem={deleteCartItem}/>
                     <Stack direction="row" justifyContent="space-between" sx={{my: 2}}>
-                        <Typography variant="h5">Total: ${calTotal(cartItemDtoList).toLocaleString()}</Typography>
-                        <Button size="large">Payyyyyyyyyyyyyyyy</Button>
+                        <Typography
+                            variant="h5"
+                            sx={{
+                                color: "white"
+                            }}
+                        >
+                            Total: ${calTotal(cartItemDtoList).toLocaleString()}
+                        </Typography>
+                        <Button
+                            size="large"
+                            onClick={prepareTransaction}
+                            variant="contained"
+                            color="error"
+                        >
+                            Next Step
+                        </Button>
                     </Stack>
                 </>
             )
-        } else if (cartItemDtoList && cartItemDtoList.length === 0){
+        } else if (cartItemDtoList && cartItemDtoList.length === 0) {
             return (
-                <Typography variant="h1">Empty Cart</Typography>
+                <EmptyCartTable/>
             )
         } else {
             return (
@@ -86,6 +116,7 @@ export default function ShoppingCartPage() {
                     renderCartContainer()
                 }
             </Container>
+            <LoadingBackdrop open={loadingBackDropOpen}/>
         </>
     )
 }
