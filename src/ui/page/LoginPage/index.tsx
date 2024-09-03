@@ -39,7 +39,9 @@ export default function LoginPage() {
                     variant="contained"
                     sx={{
                         mt: 2,
-                        height: "auto"
+                        height: "auto",
+                        backgroundColor: "black",
+                        '&:hover': {backgroundColor: 'lightgray'}
                     }}
                 >
                     Login

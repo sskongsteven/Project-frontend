@@ -13,6 +13,7 @@ import {LoginUserContext} from "../../context/LoginUserContext.ts";
 import * as FirebaseAuthService from "../../authService/FirebaseAuthService.ts";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import ShoppingCartDrawer from "./ShoppingCartDrawer.tsx";
+import XIcon from '@mui/icons-material/X';
 
 export default function TopNavBar() {
     const [drawerOpen, setDrawerOpen] = useState<boolean>(false)
@@ -39,7 +40,7 @@ export default function TopNavBar() {
                     <IconButton
                         color="warning"
                         sx={{
-                            mr:1
+                            mr: 1
                         }}
                         onClick={() => {
                             setDrawerOpen(true);
@@ -50,7 +51,7 @@ export default function TopNavBar() {
                     <Button
                         variant="contained"
                         color="error"
-                        onClick={()=>{
+                        onClick={() => {
                             FirebaseAuthService.handleSignOut()
                         }}
                     >
@@ -96,9 +97,20 @@ export default function TopNavBar() {
                                 }}
                             />
                         </Link>
-                        <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
+                        <Typography variant="h6" component="div">
                             BitterSweet E-shop
                         </Typography>
+                        <Box sx={{flexGrow: 1}}>
+                        <IconButton
+                            href="https://x.com/BSTeaParty"
+                            target="_blank"
+                            sx={{
+                                color: "white"
+                            }}
+                        >
+                            <XIcon/>
+                        </IconButton>
+                        </Box>
                         {renderLoginContainer()}
                     </Toolbar>
                 </AppBar>

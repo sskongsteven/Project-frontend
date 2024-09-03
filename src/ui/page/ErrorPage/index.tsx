@@ -17,7 +17,7 @@ export default function ErrorPage() {
                     style={{
                         width: 600,
                         height: 600,
-                        backgroundImage: "url(https://img.freepik.com/premium-vector/window-operating-system-error-warning-dialog-window-popup-message-with-system-failure-flat-design_812892-54.jpg)",
+                        backgroundImage: "url(https://i.imgur.com/HsSXJOt.png)",
                         backgroundRepeat: "no-repeat",
                         backgroundPosition: "center",
                         backgroundSize: "contain"
